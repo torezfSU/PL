@@ -113,7 +113,6 @@ class Program
         animalRefToDog.Speak();   
     }
 }
-
 ```
 {% endtab %}
 
@@ -128,7 +127,99 @@ Animal static speaks  //(method hiding, เพราะอ้างอิงจ�
 
 มีผลลัพธ์ที่ไม่ต่างกัน ต่างกันแค่การอ้างอิง static method ถูกเรียกใช้จากตัวคลาสโดยตรง (ไม่ต้องสร้างออบเจ็กต์) การเลือกเมธอดจะทำตามประเภทของตัวแปรอ้างอิง (reference type) เสมอ ไม่มีการทำงานแบบ **dynamic dispatch**
 
+## Java
 
+ในภาษา Java นั้น <mark style="color:blue;">"Method Hiding"</mark> เป็นแนวคิดที่คล้ายกับ <mark style="color:orange;">Method Overriding</mark> แต่จะเกี่ยวข้องกับการซ่อนหรือซับซ้อนการทำงานของ method ที่เป็น static ของ superclass โดยการประกาศ method ที่มีลักษณะเหมือนกันใน subclass ซึ่งถ้าเป็นกรณีที่ method เป็น static มันจะทำการ "hide" method ของ superclass แทนที่จะ override เหมือน method ปกติ
+
+แต่อ่านแบบนี้แล้วงง ไปดูตัวอย่างกันดีกว่า
+
+> แบบ non-static method
+
+{% tabs %}
+{% tab title="Java" %}
+```java
+class Animal {
+    public void move() {
+        System.out.println("Animal is moving");
+    }
+}
+
+class Dog extends Animal {
+    @Override
+    public void move() {
+        System.out.println("Dog is running");
+    }
+}
+
+public class TestMethodHiding {
+    public static void main(String[] args) {
+        Animal animal = new Animal();
+        Animal dogAsAnimal = new Dog();
+        Dog dog = new Dog();
+
+        animal.move();        
+        dogAsAnimal.move();    
+        dog.move();            
+}
+```
+{% endtab %}
+
+{% tab title="Output" %}
+```
+Animal is moving
+Dog is running //(Overriding occurs here)
+Dog is running
+```
+{% endtab %}
+{% endtabs %}
+
+{% hint style="info" %}
+ตัวอย่างด้านบนคือ Method overriding ทำให้ method ของ คลาสลูก ถูกเรียกใช้แทนที่ method ของ คลาสแม่ ตามชนิดของ object ขณะที่ **Method Hiding** ขึ้นอยู่กับชนิดของ reference
+{% endhint %}
+
+Method hiding จะเกิดเมื่อ มีการใช้ static method
+
+> แบบ static method
+
+{% tabs %}
+{% tab title="Java" %}
+```java
+class Mam {
+    public static void sound() {
+        System.out.println("Mam make a sound");
+    }
+}
+
+class Son extends Mam {
+    public static void sound() {
+        System.out.println("Son make a sound");
+    }
+}
+
+public class TT {
+    public static void main(String[] args) {
+        Mam m = new Mam();
+        Mam sonAsMam = new Son();
+        Son s = new Son();
+
+        m.sound();        
+        sonAsMam.sound();   
+        s.sound();           
+    }
+}
+```
+{% endtab %}
+
+{% tab title="Output" %}
+```
+Mam make a sound
+Mam make a sound //(Method Hiding occurs here)
+Son make a sound 
+```
+{% endtab %}
+{% endtabs %}
+
+เมื่อ method เป็น static จะไม่สามารถ override ได้เหมือนกับ method ปกติ แต่สามารถ **Method Hiding** ในกรณีนี้ method ของ ลูก(`Son`) จะซ่อน method ของ แม่ (`Mam`) ไว้
 
 ## Reference
 
@@ -143,3 +234,16 @@ Animal static speaks  //(method hiding, เพราะอ้างอิงจ�
 ### static and non-static method มันเกี่ยวกันยังไง ในmethod hiding?
 
 {% embed url="https://www.scaler.com/topics/method-hiding-in-java/" %}
+
+### Method hiding in Java?
+
+{% embed url="https://www.naukri.com/code360/library/method-hiding-in-java" %}
+
+{% embed url="https://www.scaler.com/topics/method-hiding-in-java/" %}
+
+### Method hiding จะมีเมื่อเป็น Static Method
+
+{% embed url="https://dev.to/ravi_sarva/understanding-method-overriding-method-hiding-and-overloading-in-java-53o4" %}
+
+
+
