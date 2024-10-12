@@ -1,13 +1,19 @@
 ---
-description: ประกฤษฎิ์ อรุณกิจเจริญ 650710563
 icon: hand-wave
+description: ประกฤษฎิ์ อรุณกิจเจริญ 650710563
 ---
 
 # Method Hiding
 
-Method Hiding หมายถึง หมายถึงการซ่อนหรือปกปิด เมธอดของคลาสพ่อแม่ (base class) โดยที่คลาสลูก (derived class) สร้างเมธอดที่มีชื่อเหมือนกันขึ้นมา
+<mark style="color:blue;">Method Hiding</mark> หมายถึง หมายถึงการซ่อนหรือปกปิด เมธอดของคลาสพ่อแม่ (base class) โดยที่คลาสลูก (derived class) สร้างเมธอดที่มีชื่อเหมือนกันขึ้นมา
 
-แต่ไม่ได้ใช้การสืบทอดผ่านการ **override** แต่เป็นการสร้างเมธอดใหม่ ซึ่งเมธอดในคลาสลูกจะ "ซ่อน" เมธอดของคลาสพ่อแม่เมื่อมีการอ้างอิงหรือสร้างobjectเป็นประเภทของคลาสลูก
+แต่ไม่ได้ใช้การสืบทอดผ่านการ <mark style="color:orange;">**override**</mark> แต่เป็นการสร้างเมธอดใหม่ ซึ่งเมธอดในคลาสลูกจะ "ซ่อน" เมธอดของคลาสพ่อแม่เมื่อมีการอ้างอิงหรือสร้างobjectเป็นประเภทของคลาสลูก
+
+{% hint style="info" %}
+มีลักษณะการทำงานที่ต่างออกไปในบริบทของ <mark style="color:yellow;">**static methods**</mark> หรือ <mark style="color:green;">**non-static methods**</mark> และอาจเกิดขึ้นได้โดยอัตโนมัติหากเรามีการนิยามเมธอดที่ซ้ำชื่อกัน
+{% endhint %}
+
+<mark style="color:red;">**ในภาษา C#**</mark> เมื่อสร้างเมธอดในคลาสลูกที่มีsignature เหมือนกับเมธอดในคลาสพ่อแม่ แต่ใช้คำสั่ง `new` เพื่อบอกคอมไพเลอร์ว่าเมธอดนี้ไม่ใช่การสืบทอดแบบ overriding แต่เป็นการซ่อนเมธอดแทน
 
 ตัวอย่าง C#&#x20;
 
@@ -47,7 +53,7 @@ class Program
         p.Display();         
         c.Print();           
         c.Display();         
-        pRefToC.Print();     
+        pRefToC.Print();   //เป็นการอ้างอิง พ่อแม่ แต่ชึ้ไปที่ลูก  
     }
 }
 console.log(message);
@@ -64,3 +70,29 @@ Parent class Print method
 ```
 {% endtab %}
 {% endtabs %}
+
+> ตัวอย่างนี้เป็น Method Hiding แบบ non-static method
+
+จะเห็นว่าในคลาส `Parent` มีเมธอด `Print()` และ `Display()` ในคลาส `Child` มีเมธอด `Print()` ถูกซ่อนด้วยkeyword`new`, แต่เมธอด `Display()` ไม่ได้ถูกซ่อน
+
+&#x20; ผลลัพธ์เมื่อเรียก `Print()` ผ่านออบเจกต์ของ `Child` จะเป็นเมธอดจาก `Child`เมื่อเรียก `Display()` ผ่านObjectของ `Child`, เมธอดจาก `Parent` จะถูกเรียกใช้เพราะไม่ได้ซ่อน
+
+{% hint style="info" %}
+จะเห็นว่า การใช้ new ในการ <mark style="color:blue;">Method Hiding</mark> ไม่ได้มีผลลัพธ์ต่างจากการไม่ใช้ ใน C# keyword new ช่วยแค่การซ่อนตัวพ่อแม่ ทำให้ Code อ่านง่ายขึ้น และช่วยป้องกันเตือน ไม่ให้ไปยุ่งกับพ่อแม่
+{% endhint %}
+
+
+
+## Reference
+
+### การใช้ Method hiding in C# และ อะไรคือ Method hiding
+
+{% embed url="https://www.geeksforgeeks.org/method-hiding-in-c-sharp/" %}
+
+{% embed url="https://www.tutorialsteacher.com/csharp/method-hiding" %}
+
+{% embed url="https://medium.com/@javvadirupasri8/method-hiding-shadowing-and-overriding-in-c-explained-with-examples-643c7dfc8ccc" %}
+
+### static and non-static method มันเกี่ยวกันยังไง ในmethod hiding?
+
+{% embed url="https://www.scaler.com/topics/method-hiding-in-java/" %}
