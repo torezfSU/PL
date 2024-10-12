@@ -15,7 +15,7 @@ description: ประกฤษฎิ์ อรุณกิจเจริญ 65
 
 <mark style="color:red;">**ในภาษา C#**</mark> เมื่อสร้างเมธอดในคลาสลูกที่มีsignature เหมือนกับเมธอดในคลาสพ่อแม่ แต่ใช้คำสั่ง `new` เพื่อบอกคอมไพเลอร์ว่าเมธอดนี้ไม่ใช่การสืบทอดแบบ overriding แต่เป็นการซ่อนเมธอดแทน
 
-ตัวอย่าง C#&#x20;
+> ตัวอย่างนี้เป็น Method Hiding แบบ non-static method
 
 {% tabs %}
 {% tab title="C#" %}
@@ -71,8 +71,6 @@ Parent class Print method
 {% endtab %}
 {% endtabs %}
 
-> ตัวอย่างนี้เป็น Method Hiding แบบ non-static method
-
 จะเห็นว่าในคลาส `Parent` มีเมธอด `Print()` และ `Display()` ในคลาส `Child` มีเมธอด `Print()` ถูกซ่อนด้วยkeyword`new`, แต่เมธอด `Display()` ไม่ได้ถูกซ่อน
 
 &#x20; ผลลัพธ์เมื่อเรียก `Print()` ผ่านออบเจกต์ของ `Child` จะเป็นเมธอดจาก `Child`เมื่อเรียก `Display()` ผ่านObjectของ `Child`, เมธอดจาก `Parent` จะถูกเรียกใช้เพราะไม่ได้ซ่อน
@@ -80,6 +78,55 @@ Parent class Print method
 {% hint style="info" %}
 จะเห็นว่า การใช้ new ในการ <mark style="color:blue;">Method Hiding</mark> ไม่ได้มีผลลัพธ์ต่างจากการไม่ใช้ ใน C# keyword new ช่วยแค่การซ่อนตัวพ่อแม่ ทำให้ Code อ่านง่ายขึ้น และช่วยป้องกันเตือน ไม่ให้ไปยุ่งกับพ่อแม่
 {% endhint %}
+
+> ตัวอย่างนี้เป็น Method Hiding แบบ static method
+
+{% tabs %}
+{% tab title="C#" %}
+```csharp
+using System;
+
+class Animal
+{
+    public static void Speak()
+    {
+        Console.WriteLine("Animal static speaks");
+    }
+}
+
+class Dog : Animal
+{
+    public new static void Speak()  // ซ่อน static method ของ Animal
+    {
+        Console.WriteLine("Dog static barks");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Animal.Speak();            
+        Dog.Speak();               
+
+        Animal animalRefToDog = new Dog();
+        animalRefToDog.Speak();   
+    }
+}
+
+```
+{% endtab %}
+
+{% tab title="Output" %}
+```
+Animal static speaks
+Dog static barks
+Animal static speaks  //(method hiding, เพราะอ้างอิงจากตัวแปร)
+```
+{% endtab %}
+{% endtabs %}
+
+มีผลลัพธ์ที่ไม่ต่างกัน ต่างกันแค่การอ้างอิง static method สามารถเรียกผ่านชื่อของคลาสได้เลย
 
 
 
