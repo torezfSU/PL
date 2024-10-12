@@ -1,20 +1,24 @@
 ---
 description: ประกฤษฎิ์ อรุณกิจเจริญ 650710563
+icon: hand-wave
 ---
 
 # Method Hiding
 
-&#x20;    Method Hiding หมายถึง หมายถึงการซ่อนหรือปกปิด เมธอดของคลาสพ่อแม่ (base class) โดยที่คลาสลูก (derived class) สร้างเมธอดที่มีชื่อเหมือนกันขึ้นมา&#x20;
+Method Hiding หมายถึง หมายถึงการซ่อนหรือปกปิด เมธอดของคลาสพ่อแม่ (base class) โดยที่คลาสลูก (derived class) สร้างเมธอดที่มีชื่อเหมือนกันขึ้นมา
 
-&#x20;   แต่ไม่ได้ใช้การสืบทอดผ่านการ **override** แต่เป็นการสร้างเมธอดใหม่ ซึ่งเมธอดในคลาสลูกจะ "ซ่อน" เมธอดของคลาสพ่อแม่เมื่อมีการอ้างอิงหรือสร้างobjectเป็นประเภทของคลาสลูก
+แต่ไม่ได้ใช้การสืบทอดผ่านการ **override** แต่เป็นการสร้างเมธอดใหม่ ซึ่งเมธอดในคลาสลูกจะ "ซ่อน" เมธอดของคลาสพ่อแม่เมื่อมีการอ้างอิงหรือสร้างobjectเป็นประเภทของคลาสลูก
 
+ตัวอย่าง C#&#x20;
 
-
-<pre class="language-csharp" data-full-width="false"><code class="lang-csharp"><strong>class Parent
-</strong><strong>{
-</strong><strong>    public void Print()
-</strong><strong>    {
-</strong>        Console.WriteLine("Parent class Print method");
+{% tabs %}
+{% tab title="C#" %}
+```csharp
+class Parent
+{
+    public void Print()
+    {
+        Console.WriteLine("Parent class Print method");
     }
 
     public void Display()
@@ -39,14 +43,24 @@ class Program
         Child c = new Child();
         Parent pRefToC = new Child();
 
-        p.Print();           // ผลลัพธ์: Parent class Print method
-        p.Display();         // ผลลัพธ์: Parent class Display method
-        c.Print();           // ผลลัพธ์: Child class Print method
-        c.Display();         // ผลลัพธ์: Parent class Display method (เพราะไม่ได้ซ่อน)
-        pRefToC.Print();     // ผลลัพธ์: Parent class Print method
+        p.Print();           
+        p.Display();         
+        c.Print();           
+        c.Display();         
+        pRefToC.Print();     
     }
 }
-</code></pre>
+console.log(message);
+```
+{% endtab %}
 
-
-
+{% tab title="Output" %}
+```
+Parent class Print method
+Parent class Display method
+Child class Print method
+Parent class Display method 
+Parent class Print method
+```
+{% endtab %}
+{% endtabs %}
