@@ -265,7 +265,7 @@ print("Updated hidden data:", obj.get_hidden_data())  # แสดงค่า 99
 
 ## สรุป
 
-method hiding ช่วยในการซ่อน method จากการเข้าถึงผ่าน method ลูก โดย method ของลูก จะทำงานแทน ซ่อน method แม่ คล้ายกับ method overriding และแต่ละภาษาก็จะมีเงื่อนไขหรือวิธีใช้ต่างกัน
+method hiding ช่วยในการซ่อน method จากการเข้าถึงผ่าน method ลูก โดย method ของลูก จะทำงานแทน ซ่อน method แม่ คล้ายกับ method overriding หรือ การที่ซ่อนการเข้าถึงให้ method เข้าถึงยากขึ้น และแต่ละภาษาก็จะมีเงื่อนไขหรือวิธีใช้ต่างกัน
 
 
 
